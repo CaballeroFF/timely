@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <title>Timely</title>
 </head>
@@ -64,6 +65,55 @@
         </div>
     </div>
 
+    <!-- INSERT MODAL -->
+    <div id="modal-insert" class="modal">
+        <div class="modal-content grey lighten-4">
+            <h4 class="deep-purple-text text-darken-4">Insert record</h4><br/>
+            
+            <form id="insert-form">
+                <div class="row">
+                    <div class="input-field col s6">
+                      <input id="insert-date" type="text" class="datepicker" required>
+                      <label for="insert-date">Date</label>
+                      <i class="material-icons prefix">today</i>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="input-field col s6">
+                      <input id="insert-date" type="text" class="timepicker" required>
+                      <label for="insert-date">Date</label>
+                      <i class="material-icons prefix">schedule</i>
+                    </div>
+                </div>
+                <button class="btn red accent-3 z-depth-0">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DATA LIST -->
+    <div class="container">
+        <ul class="collection center-align" style="margin-bottom: 0px;">
+            <li class="collection-item">
+                <div>
+                    <button id="collection-control" style="background: none;border: none;">
+                        Records
+                    </button>
+                    <a href="#!" class="tooltipped secondary-content modal-trigger" data-target="modal-insert" data-position="right" data-tooltip="Add record">
+                        <i class="small material-icons red-text text-accent-3">add_box</i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+      
+        <ul id="collection-content" class="collection" style="margin-top: 0px;">
+            <li class="collection-item">Alvin</li>
+            <li class="collection-item">Alvin</li>
+            <li class="collection-item">Alvin</li>
+            <li class="collection-item">Alvin</li>
+        </ul>
+    </div>
+    
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>

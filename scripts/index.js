@@ -1,6 +1,18 @@
 // DOM elements
 const loggedInElements = document.querySelectorAll('.logged-in');
 const loggedOutElements = document.querySelectorAll('.logged-out');
+const collectionControl = document.querySelector('#collection-control');
+const collectionContent = document.querySelector('#collection-content');
+
+//  control collection
+collectionControl.addEventListener('click', (e) => {
+    
+    if (collectionContent.style.display == 'none') {
+        collectionContent.style.display="block";
+    } else {
+        collectionContent.style.display="none";
+    }
+});
 
 // setup nav ui
 const setupUI = (user) => {
@@ -19,6 +31,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var modals = document.querySelectorAll('.modal');
     M.Modal.init(modals);
 
-    var items = document.querySelectorAll('.collapsible');
-    M.Collapsible.init(items);
+    var tooltip = document.querySelector('.tooltipped');
+    M.Tooltip.init(tooltip);
+
+    var datePicker = document.querySelectorAll('.datepicker');
+    M.Datepicker.init(datePicker, {container: "body"});
+
+    var timePicker = document.querySelectorAll('.timepicker');
+    M.Timepicker.init(timePicker,{
+        container: "body",
+        twelveHour: false
+    });
 });

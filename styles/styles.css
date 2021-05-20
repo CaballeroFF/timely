@@ -5,5 +5,28 @@
 /* label underline focus color */
 .input-field input:focus {
     border-bottom: 1px solid #6200ea  !important;
-    box-shadow: 0 1px 0 0 #6200ea  !important
+    box-shadow: 0 1px 0 0 #6200ea  !important;
 }
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #6200ea !important;
+}
+
+/* datepicker */
+.datepicker-date-display {background-color: #311b92;} 
+.datepicker-cancel, .datepicker-clear, .datepicker-today, .datepicker-done {color:#ff1744;}  
+.datepicker-table td.is-today {color: #6200ea;}  
+.datepicker-table td.is-selected {
+    background-color: #ff1744;
+    color: white;
+}
+
+/* timepicker */
+.timepicker-digital-display {background-color: #311b92;}
+.timepicker-clear {color: #ff1744;}
+.timepicker-close {color: #ff1744;}
+.timepicker-date-display {background-color: #311b92;}
+.timepicker-tick:hover { background: #ff1744 !important; }
+.timepicker-canvas line { stroke: #ff1744 !important; }
+.timepicker-canvas-bearing { fill: #ff1744 !important; }
+.timepicker-canvas-bg { fill: #ff1744 !important; }
