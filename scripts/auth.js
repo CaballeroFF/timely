@@ -1,6 +1,6 @@
 // listen for auth status change
 auth.onAuthStateChanged(user => {
-    setupUI(user);
+    toggleSignedInStatus(user);
     if (user) {
         db.collection('users').doc(user.uid).collection('record').onSnapshot(snapshot => {
             setupRecords(snapshot.docs);
@@ -57,7 +57,7 @@ insertForm.addEventListener('submit', (e) => {
     let datetime = new Date(datestr + ' ' + timestr);
 
     if (!user) {
-        M.toast({ html: 'Must be signed in'})
+        M.toast({ html: 'Must be logged in'})
         closeAndResetModal(document.querySelector('#modal-insert'), insertForm);
         return;
     }
