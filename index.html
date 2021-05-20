@@ -81,8 +81,8 @@
                 
                 <div class="row">
                     <div class="input-field col s6">
-                      <input id="insert-date" type="text" class="timepicker" required>
-                      <label for="insert-date">Date</label>
+                      <input id="insert-time" type="text" class="timepicker" required>
+                      <label for="insert-time">Time</label>
                       <i class="material-icons prefix">schedule</i>
                     </div>
                 </div>
@@ -135,8 +135,9 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    // make auth reference
+    // make auth and firebase reference
     const auth = firebase.auth();
+    const db = firebase.firestore();
     </script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

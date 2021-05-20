@@ -26,6 +26,18 @@ const setupUI = (user) => {
     }
 };
 
+// setup records
+const setupRecords = (data) => {
+    let html = '';
+    data.forEach(doc => {
+        const li = `
+        <li class="collection-item">${doc.data().datetime.toDate()}</li>
+        `;
+        html += li;
+    });
+    collectionContent.innerHTML = html;
+}
+
 // setup materialize components
 document.addEventListener('DOMContentLoaded', function() {
     var modals = document.querySelectorAll('.modal');
@@ -35,7 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
     M.Tooltip.init(tooltip);
 
     var datePicker = document.querySelectorAll('.datepicker');
-    M.Datepicker.init(datePicker, {container: "body"});
+    M.Datepicker.init(datePicker, {
+        container: "body",
+        format: "mm/dd/yyyy"
+    });
 
     var timePicker = document.querySelectorAll('.timepicker');
     M.Timepicker.init(timePicker,{

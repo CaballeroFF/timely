@@ -1,6 +1,13 @@
 // listen for auth status change
 auth.onAuthStateChanged(user => {
     setupUI(user);
+    if (user) {
+        db.collection('users').doc(user.uid).collection('record').onSnapshot(snapshot => {
+            setupRecords(snapshot.docs);
+        }, err => console.error(err));
+    } else {
+        setupRecords([]);
+    }
 });
 
 // signup
@@ -37,6 +44,32 @@ const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
     e.preventDefault();
     auth.signOut();
+});
+
+// insert
+const insertForm = document.querySelector('#insert-form');
+insertForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const datestr = insertForm['insert-date'].value;
+    const timestr = insertForm['insert-time'].value;
+    let user = auth.currentUser;
+    let datetime = new Date(datestr + ' ' + timestr);
+
+    if (!user) {
+        M.toast({ html: 'Must be signed in'})
+        closeAndResetModal(document.querySelector('#modal-insert'), insertForm);
+        return;
+    }
+
+    db.collection('users').doc(user.uid).collection('record').add({
+        datetime: datetime
+    }).then(() => {
+        closeAndResetModal(document.querySelector('#modal-insert'), insertForm);
+    }).catch(err => {
+        console.error(err);
+    })
+    
 });
 
 // close modal and reset form fields
