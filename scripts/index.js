@@ -46,6 +46,7 @@ let userData = null;
 const setupRecords = (data) => {
     userData = data;
     fillCollection(data);
+    updateChart(data);
 }
 
 // fill collection with firebase data
@@ -55,9 +56,13 @@ const fillCollection = (data) => {
         if (i >= data.length) break;
         let doc = data[i];
         let dt = doc.data().datetime.toDate();
+        let date = dt.toDateString();
+        let time = dt.getHours().pad(2) + ':' + dt.getMinutes().pad(2);
 
         const li = `
-        <li class="collection-item">${dt}</li>
+        <li class="collection-item">
+            <p style="margin:0px">Date: ${date} <br> Time: ${time}</p>
+        </li>
         `;
         html += li;
     }
@@ -74,7 +79,6 @@ const fillCollection = (data) => {
 
 // toggle show more collection 
 const toggleShowMore = function() {
-    console.log(itemsShown);
     if (itemsShown >= userData.length) {
         itemsShown = initItems;
     } else {
