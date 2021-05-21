@@ -69,7 +69,7 @@ const fillCollection = (data) => {
 
     const msg = itemsShown < data.length ? 'show more' : 'show less';
 
-    if (html.length && initItems != data.length) {
+    if (html.length && data.length > initItems) {
         html += `<li class="collection-item center-align">
                     <a id="collection-show-more" href="#">${msg}</a>
                 </li>`;

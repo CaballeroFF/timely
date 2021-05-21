@@ -2,7 +2,7 @@
 auth.onAuthStateChanged(user => {
     toggleSignedInStatus(user);
     if (user) {
-        db.collection('users').doc(user.uid).collection('record').onSnapshot(snapshot => {
+        db.collection('users').doc(user.uid).collection('record').orderBy("datetime", "desc").onSnapshot(snapshot => {
             setupRecords(snapshot.docs);
         }, err => console.error(err));
     } else {
