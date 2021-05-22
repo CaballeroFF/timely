@@ -11,21 +11,20 @@ Number.prototype.pad = function(size) {
 }
 
 //  control collection
-collectionControl.addEventListener('click', toggleCollection);
-document.addEventListener('click',function(e){
-    if(e.target && e.target.id== 'collection-show-more'){
-          toggleShowMore();
-     }
- });
-
-// toggle collection
-function toggleCollection() {
+collectionControl.addEventListener('click', (e) => {
+    e.preventDefault();
     if (collectionContent.style.display == 'none') {
         collectionContent.style.display="block";
     } else {
         collectionContent.style.display="none";
     }
-};
+});
+document.addEventListener('click',function(e){
+    if(e.target && e.target.id== 'collection-show-more'){
+        e.preventDefault();
+        toggleShowMore();
+     }
+ });
 
 // setup nav ui
 const toggleSignedInStatus = (user) => {
