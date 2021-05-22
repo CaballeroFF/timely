@@ -19,12 +19,30 @@ collectionControl.addEventListener('click', (e) => {
         collectionContent.style.display="none";
     }
 });
-document.addEventListener('click',function(e){
+
+document.addEventListener('click', (e) => {
+    //console.log(e.target.classList.contains('delete-item'));
     if(e.target && e.target.id== 'collection-show-more'){
         e.preventDefault();
         toggleShowMore();
-     }
+    }
+
+    if(e.target && e.target.classList.contains('delete-item')){
+        let docId = e.target.parentNode.parentNode.getAttribute('data-itemid');
+        console.log(docId);
+        deleteDoc(docId);
+    }
+
+    if(e.target && e.target.classList.contains('edit-item')){
+        console.log('edit');
+    }
  });
+
+//  collectionContent.addEventListener('mouseover', (e) => {
+//     if (e.target && e.target.id=="1") {
+//         console.log(e.target);
+//     }
+//  });
 
 // setup nav ui
 const toggleSignedInStatus = (user) => {
@@ -60,7 +78,17 @@ const fillCollection = (data) => {
 
         const li = `
         <li class="collection-item">
-            <p style="margin:0px">Date: ${date} <br> Time: ${time}</p>
+            <div id="${i}" data-itemid="${data[i].id}">
+                <a href="#!" class="secondary-content" 
+                    style="padding-top:10px;margin-left:10px;">
+                <i class="material-icons delete-item">delete</i>
+                </a>
+                <a href="#!" class="secondary-content" 
+                    style="padding-top:10px;">
+                <i class="material-icons edit-item">edit</i>
+                </a>
+                <span>Date: ${date} <br> Time: ${time}</span>
+            </div>
         </li>
         `;
         html += li;

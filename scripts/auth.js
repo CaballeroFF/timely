@@ -77,3 +77,14 @@ const closeAndResetModal = (modal, form) => {
     M.Modal.getInstance(modal).close();
     form.reset();
 };
+
+// delete doc from firestore
+const deleteDoc = (docId) => {
+    let user = auth.currentUser;
+
+    db.collection('users').doc(user.uid).collection('record').doc(docId).delete().then(() => {
+        console.log("Document successfully deleted!");
+    }).catch((error) => {
+        console.error("Error removing document: ", error);
+    });
+};
