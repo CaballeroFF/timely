@@ -5,6 +5,7 @@ const collectionControl = document.querySelector('#collection-control');
 const collectionContent = document.querySelector('#collection-content');
 const insertModalTitle = document.querySelector('#insert-modal-title');
 const insertModalButton = document.querySelector('#insert-modal-button');
+const insertRecordButton = document.querySelector('#insert-button');
 
 Number.prototype.pad = function(size) {
     var s = String(this);
@@ -22,6 +23,21 @@ collectionControl.addEventListener('click', (e) => {
     }
 });
 
+// insert record button
+insertRecordButton.addEventListener('click', (e) => {
+    initDatePickerWith(new Date(Date.now()));
+    openInsertModalAs('Insert record', 'Add');
+});
+
+// open insert modal with custom title and button name
+const openInsertModalAs = (title, buttonName) => {
+    insertModalTitle.innerHTML = title;
+    insertModalButton.innerHTML = buttonName;
+
+    let modalInstance = M.Modal.getInstance(document.querySelector('#modal-insert'));
+    modalInstance.open();
+};
+
 document.addEventListener('click', (e) => {
     if(e.target && e.target.id== 'collection-show-more'){
         e.preventDefault();
@@ -37,16 +53,9 @@ document.addEventListener('click', (e) => {
         let docId = e.target.parentNode.parentNode.getAttribute('data-itemid');
         document.querySelector('#insert-form').setAttribute('data-itemid', docId);
 
-        let date = e.target.parentNode.parentNode.querySelector("span").getAttribute(['data-itemdate']);
-        insertModalTitle.innerHTML = 'Update record';
-        insertModalButton.innerHTML = 'Update';
-
-        let dateInstance = M.Datepicker.getInstance(document.querySelector('#insert-date'));
-        dateInstance.setDate(new Date(date));
-        dateInstance.gotoDate(new Date(date));
-
-        let modalInstance = M.Modal.getInstance(document.querySelector('#modal-insert'));
-        modalInstance.open();
+        let dateStr = e.target.parentNode.parentNode.querySelector("span").getAttribute(['data-itemdate']);
+        initDatePickerWith(new Date(dateStr));
+        openInsertModalAs('Update record', 'Update');
     }
  });
 
@@ -134,11 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var tooltip = document.querySelector('.tooltipped');
     M.Tooltip.init(tooltip);
 
-    var datePicker = document.querySelectorAll('.datepicker');
-    M.Datepicker.init(datePicker, {
-        container: "body",
-        format: "mm/dd/yyyy"
-    });
+    initDatePickerWith(new Date(Date.now()));
 
     var timePicker = document.querySelectorAll('.timepicker');
     M.Timepicker.init(timePicker,{
@@ -147,3 +152,19 @@ document.addEventListener('DOMContentLoaded', function() {
         defaultTime: '00:00'
     });
 });
+
+const initDatePickerWith = (date) => {
+    let dateInstance = M.Datepicker.getInstance(document.querySelector('.datepicker'));
+    if (dateInstance) {
+        dateInstance.destroy();
+    }
+
+    let datePicker = document.querySelectorAll('.datepicker');
+    console.log(datePicker);
+    M.Datepicker.init(datePicker, {
+        container: "body",
+        format: "mm/dd/yyyy",
+        defaultDate: date,
+        setDefaultDate: true
+    });
+};
