@@ -3,6 +3,8 @@ const loggedInElements = document.querySelectorAll('.logged-in');
 const loggedOutElements = document.querySelectorAll('.logged-out');
 const collectionControl = document.querySelector('#collection-control');
 const collectionContent = document.querySelector('#collection-content');
+const insertModalTitle = document.querySelector('#insert-modal-title');
+const insertModalButton = document.querySelector('#insert-modal-button');
 
 Number.prototype.pad = function(size) {
     var s = String(this);
@@ -21,7 +23,6 @@ collectionControl.addEventListener('click', (e) => {
 });
 
 document.addEventListener('click', (e) => {
-    //console.log(e.target.classList.contains('delete-item'));
     if(e.target && e.target.id== 'collection-show-more'){
         e.preventDefault();
         toggleShowMore();
@@ -29,12 +30,23 @@ document.addEventListener('click', (e) => {
 
     if(e.target && e.target.classList.contains('delete-item')){
         let docId = e.target.parentNode.parentNode.getAttribute('data-itemid');
-        console.log(docId);
         deleteDoc(docId);
     }
 
     if(e.target && e.target.classList.contains('edit-item')){
-        console.log('edit');
+        let docId = e.target.parentNode.parentNode.getAttribute('data-itemid');
+        document.querySelector('#insert-form').setAttribute('data-itemid', docId);
+
+        let date = e.target.parentNode.parentNode.querySelector("span").getAttribute(['data-itemdate']);
+        insertModalTitle.innerHTML = 'Update record';
+        insertModalButton.innerHTML = 'Update';
+
+        let dateInstance = M.Datepicker.getInstance(document.querySelector('#insert-date'));
+        dateInstance.setDate(new Date(date));
+        dateInstance.gotoDate(new Date(date));
+
+        let modalInstance = M.Modal.getInstance(document.querySelector('#modal-insert'));
+        modalInstance.open();
     }
  });
 
@@ -87,7 +99,7 @@ const fillCollection = (data) => {
                     style="padding-top:10px;">
                 <i class="material-icons edit-item">edit</i>
                 </a>
-                <span>Date: ${date} <br> Time: ${time}</span>
+                <span data-itemdate="${date}">Date: ${date} <br> Time: ${time}</span>
             </div>
         </li>
         `;
@@ -131,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var timePicker = document.querySelectorAll('.timepicker');
     M.Timepicker.init(timePicker,{
         container: "body",
-        twelveHour: false
+        twelveHour: false,
+        defaultTime: '00:00'
     });
 });

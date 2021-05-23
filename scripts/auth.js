@@ -1,3 +1,4 @@
+
 // listen for auth status change
 auth.onAuthStateChanged(user => {
     toggleSignedInStatus(user);
@@ -51,6 +52,8 @@ const insertForm = document.querySelector('#insert-form');
 insertForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    let mode = insertForm['insert-modal-button'].firstChild.nodeValue;
+
     const datestr = insertForm['insert-date'].value;
     const timestr = insertForm['insert-time'].value;
     let user = auth.currentUser;
@@ -62,21 +65,50 @@ insertForm.addEventListener('submit', (e) => {
         return;
     }
 
-    db.collection('users').doc(user.uid).collection('record').add({
-        datetime: datetime
-    }).then(() => {
-        closeAndResetModal(document.querySelector('#modal-insert'), insertForm);
-    }).catch(err => {
-        console.error(err);
-    })
-    
+    if (mode == 'Add') {
+        addDoc(user, datetime, document.querySelector('#modal-insert'), insertForm);
+    } 
+    else if (mode == 'Update') {
+        updateDoc(user, datetime, document.querySelector('#modal-insert'), insertForm)
+    } else {
+        console.log(mode, 'is not a valid mode');
+    }
 });
 
 // close modal and reset form fields
 const closeAndResetModal = (modal, form) => {
-    M.Modal.getInstance(modal).close();
-    form.reset();
+    if (modal) {
+        M.Modal.getInstance(modal).close();
+    }
+    if (form) {
+        form.reset();
+    }
 };
+
+// add doc to firestore
+const addDoc = (user, data, modal, form) => {
+    db.collection('users').doc(user.uid).collection('record').add({
+        datetime: data
+    }).then(() => {
+        closeAndResetModal(modal, form);
+    }).catch(err => {
+        console.error(err);
+    });
+} 
+
+// update doc from firestore
+const updateDoc = (user, data, modal, form) => {
+    db.collection('users').doc(user.uid).collection('record').doc(form.getAttribute('data-itemid')).set({
+        datetime: data
+    }).then(() => {
+        closeAndResetModal(modal, form);
+        if (form) {
+        form.setAttribute('data-itemid', '');
+        }
+    }).catch(err => {
+        console.error(err);
+    });
+} 
 
 // delete doc from firestore
 const deleteDoc = (docId) => {

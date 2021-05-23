@@ -71,9 +71,9 @@
     <!-- INSERT MODAL -->
     <div id="modal-insert" class="modal">
         <div class="modal-content grey lighten-4">
-            <h4 class="deep-purple-text text-darken-4">Insert record</h4><br/>
+            <h4 id="insert-modal-title" class="deep-purple-text text-darken-4">Insert record</h4><br/>
             
-            <form id="insert-form">
+            <form id="insert-form" data-itemid="">
                 <div class="row">
                     <div class="input-field col s6">
                       <input id="insert-date" type="text" class="datepicker" required>
@@ -89,7 +89,7 @@
                       <i class="material-icons prefix">schedule</i>
                     </div>
                 </div>
-                <button class="btn red accent-3 z-depth-0">Add</button>
+                <button id="insert-modal-button" class="btn red accent-3 z-depth-0">Add</button>
             </form>
         </div>
     </div>
