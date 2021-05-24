@@ -53,17 +53,16 @@ document.addEventListener('click', (e) => {
         let docId = e.target.parentNode.parentNode.getAttribute('data-itemid');
         document.querySelector('#insert-form').setAttribute('data-itemid', docId);
 
-        let dateStr = e.target.parentNode.parentNode.querySelector("span").getAttribute(['data-itemdate']);
+        let dateStr = e.target.parentNode.parentNode.querySelector('span').getAttribute(['data-itemdate']);
         initDatePickerWith(new Date(dateStr));
         openInsertModalAs('Update record', 'Update');
     }
  });
 
-//  collectionContent.addEventListener('mouseover', (e) => {
-//     if (e.target && e.target.id=="1") {
-//         console.log(e.target);
-//     }
-//  });
+collectionContent.addEventListener('click', (e) => {
+    e.target.parentNode.parentNode.querySelectorAll('.hideable-item').forEach(e => e.style.display="none");
+    e.target.querySelectorAll('a').forEach(e => e.style.display="block");
+ });
 
 // setup nav ui
 const toggleSignedInStatus = (user) => {
@@ -99,14 +98,14 @@ const fillCollection = (data) => {
 
         const li = `
         <li class="collection-item">
-            <div id="${i}" data-itemid="${data[i].id}">
-                <a href="#!" class="secondary-content" 
+            <div data-itemid="${data[i].id}">
+                <a href="#!" class="secondary-content hideable-item" style="display: none;"
                     style="padding-top:10px;margin-left:10px;">
-                <i class="material-icons delete-item">delete</i>
+                <i class="material-icons red-text text-accent-3 delete-item">delete</i>
                 </a>
-                <a href="#!" class="secondary-content" 
+                <a href="#!" class="secondary-content hideable-item" style="display: none;"
                     style="padding-top:10px;">
-                <i class="material-icons edit-item">edit</i>
+                <i class="material-icons red-text text-accent-3 edit-item">edit</i>
                 </a>
                 <span data-itemdate="${date}">Date: ${date} <br> Time: ${time}</span>
             </div>
@@ -119,7 +118,7 @@ const fillCollection = (data) => {
 
     if (html.length && data.length > initItems) {
         html += `<li class="collection-item center-align">
-                    <a id="collection-show-more" href="#">${msg}</a>
+                    <a id="collection-show-more" href="#" class="deep-purple-text text-accent-4">${msg}</a>
                 </li>`;
     }
     collectionContent.innerHTML = html;
